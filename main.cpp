@@ -4,6 +4,8 @@
 #include <windows.h>
 #include <string>
 
+void crearArchivos(int cantidad);
+
 using namespace std;
 
 int main() {
@@ -19,6 +21,10 @@ int main() {
         switch (opc) {
             case 1:
                 cout << "Opcion seleccionada -> Crear Archivos" << endl;
+                int cantidad;
+                cout << "Ingrese la cantidad de archivos que desea crear" << endl;
+                cin >> cantidad;
+                crearArchivos(cantidad);
                 break;
             case 2:
                 cout << "Opcion seleccionada -> Buscar Archivo menos pesado" << endl;
@@ -32,5 +38,28 @@ int main() {
         }
     } while (opc != 0);
     return 0;
+}
+
+void crearArchivos(int cantidad){
+    string nombreArchivo = "documento";
+    if (cantidad % 2 == 0){
+        cout << "Cantidad de Archivos par" << endl;
+        for (int i = 0; i < cantidad; ++i) {
+            ofstream file;
+            file.open("C:/Users/kathe/Documents/par/" + nombreArchivo + to_string(i + 1) + ".txt");
+
+            file.close();
+        }
+        cout << cantidad << " Archivos creados con Exito" << endl;
+    }else{
+        cout << "Cantidad de Archivos impar" << endl;
+        for (int i = 0; i < cantidad; ++i) {
+            ofstream file;
+            file.open("C:/Users/kathe/Desktop/impar/" + nombreArchivo + to_string(i + 1) + ".txt");
+
+            file.close();
+        }
+        cout << cantidad << " Archivos creados con Exito" << endl;
+    }
 }
 
