@@ -5,6 +5,8 @@
 #include <string>
 
 void crearArchivos(int cantidad);
+void agregarTexto();
+
 
 using namespace std;
 
@@ -47,7 +49,10 @@ void crearArchivos(int cantidad){
         for (int i = 0; i < cantidad; ++i) {
             ofstream file;
             file.open("C:/Users/kathe/Documents/par/" + nombreArchivo + to_string(i + 1) + ".txt");
-
+            agregarTexto();
+            for (int j = 0; j < i+1; ++j) {
+                file << "linea de texto" << endl;
+            }
             file.close();
         }
         cout << cantidad << " Archivos creados con Exito" << endl;
@@ -56,10 +61,17 @@ void crearArchivos(int cantidad){
         for (int i = 0; i < cantidad; ++i) {
             ofstream file;
             file.open("C:/Users/kathe/Desktop/impar/" + nombreArchivo + to_string(i + 1) + ".txt");
-
+            agregarTexto();
+            for (int j = 0; j < i+1; ++j) {
+                file << "linea de texto" << endl;
+            }
             file.close();
         }
         cout << cantidad << " Archivos creados con Exito" << endl;
     }
+}
+
+void agregarTexto(){
+    cout << "Agregando texto..." << endl;
 }
 
