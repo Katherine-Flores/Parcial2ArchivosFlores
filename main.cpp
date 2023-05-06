@@ -6,6 +6,10 @@
 
 void crearArchivos(int cantidad);
 void agregarTexto();
+int contarArchivosDeDirectorio();
+int contarArchivosDeDirectorio2();
+void mostrarDetalles();
+void mostrarDetalles2();
 
 
 using namespace std;
@@ -17,7 +21,7 @@ int main() {
         cout << "------------------------------------------------------------------------" << endl;
         cout << "Elija una opcion a realizar" << endl;
         cout << "[1] Crear Archivos" << endl;
-        cout << "[2] Buscar Archivo menos pesado" << endl;
+        cout << "[2] Mostrar el peso de los archivos" << endl;
         cout << "[0] Salir" << endl;
         cin >> opc;
         switch (opc) {
@@ -29,7 +33,9 @@ int main() {
                 crearArchivos(cantidad);
                 break;
             case 2:
-                cout << "Opcion seleccionada -> Buscar Archivo menos pesado" << endl;
+                cout << "Opcion seleccionada -> Mostrar el peso de los archivos" << endl;
+                mostrarDetalles();
+                mostrarDetalles2();
                 break;
             case 0:
                 cout << "Gracias por Utilizar el Programa" << endl;
@@ -56,6 +62,7 @@ void crearArchivos(int cantidad){
             file.close();
         }
         cout << cantidad << " Archivos creados con Exito" << endl;
+        contarArchivosDeDirectorio();
     }else{
         cout << "Cantidad de Archivos impar" << endl;
         for (int i = 0; i < cantidad; ++i) {
@@ -68,6 +75,7 @@ void crearArchivos(int cantidad){
             file.close();
         }
         cout << cantidad << " Archivos creados con Exito" << endl;
+        contarArchivosDeDirectorio2();
     }
 }
 
@@ -75,3 +83,54 @@ void agregarTexto(){
     cout << "Agregando texto..." << endl;
 }
 
+int contarArchivosDeDirectorio(){
+    WIN32_FIND_DATA findFileData;
+    HANDLE          hFind;
+    int cantidadDeArchivos=0;
+    hFind = FindFirstFile("C:/Users/kathe/Documents/par/*", &findFileData);
+
+    if (hFind == INVALID_HANDLE_VALUE){
+        cout << "Ruta incorrecta" << endl;
+    }else{
+        while (FindNextFile(hFind, &findFileData)!=0){
+            cantidadDeArchivos=cantidadDeArchivos+1;
+        }
+    }
+    return cantidadDeArchivos-1;
+}
+
+int contarArchivosDeDirectorio2(){
+    WIN32_FIND_DATA findFileData;
+    HANDLE          hFind;
+    int cantidadDeArchivos=0;
+    hFind = FindFirstFile("C:/Users/kathe/Desktop/impar/*", &findFileData);
+
+    if (hFind == INVALID_HANDLE_VALUE){
+        cout << "Ruta incorrecta" << endl;
+    }else{
+        while (FindNextFile(hFind, &findFileData)!=0){
+            cantidadDeArchivos=cantidadDeArchivos+1;
+        }
+    }
+    return cantidadDeArchivos-1;
+}
+
+void mostrarDetalles(){
+    filesystem::directory_iterator directoryIterator("C:/Users/kathe/Documents/par");
+    for(const auto& entry: directoryIterator){
+        if (!filesystem::is_directory(entry.status())){
+            cout << "Nombre de Archivo: " << entry.path().filename() << endl;
+            cout << "Peso: " << file_size(entry.path()) << " bytes" << endl;
+        }
+    }
+}
+
+void mostrarDetalles2(){
+    filesystem::directory_iterator directoryIterator("C:/Users/kathe/Desktop/impar");
+    for(const auto& entry: directoryIterator){
+        if (!filesystem::is_directory(entry.status())){
+            cout << "Nombre de Archivo: " << entry.path().filename() << endl;
+            cout << "Peso: " << file_size(entry.path()) << " bytes" << endl;
+        }
+    }
+}
